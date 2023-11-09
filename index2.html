@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assigment </title>
+  <style>
+    .container {
+      display: flex;
+    }
+
+    .box {
+      flex: 1;
+      padding: 10px;
+      margin: 5px;
+      text-align: center;
+    }
+
+    .box1 {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #000;
+      margin: 5px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      background-color: rgb(111, 228, 122);
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+
+    th,
+    td {
+      padding: 8px;
+    }
+
+    .column {
+      padding: 10px;
+      margin: 5px;
+    }
+
+    .sub-container2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 20px;
+      border-radius: 20px;
+      margin-right: 35px;
+      padding-bottom: 26px;
+    }
+
+    .sub-div {
+      width: 100%;
+      height: 100%;
+      margin: 10px;
+      padding: 10px;
+      text-align: center;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .sub-div1 {
+      width: 100%;
+      height: 100%;
+      margin: 10px;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .sub-div:nth-child(1) {
+      background-color: #ff5733;
+    }
+
+    .sub-div:nth-child(4) {
+      background-color: #3357ff;
+    }
+
+    .sub-container3 {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+    }
+
+    .sub-container3 {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      margin-top: 30px;
+    }
+
+    .sub-container3 {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+    }
+
+    .sub-container3 p {
+      font-size: 14px;
+    }
+
+    .button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #2d0edf;
+    }
+
+    .button-container1 {
+      padding-top: 100px;
+    }
+
+    .button-container2 {
+      padding-top: 165px;
+    }
+
+    .button-container3 {
+      padding-top: 110px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box">
+      <div class="column" id="div1">
+        <table>
+          <thead>
+            <tr>
+              <th>Contry</th>
+              <th>State count</th>
+              <th>City count</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="sub-container2" id="div2">
+        <div class="sub-div">Lorem Ipsum 1</div>
+        <div class="sub-div1"></div>
+        <div class="sub-div1"></div>
+        <div class="sub-div">Lorem Ipsum 4</div>
+      </div>
+      <div class="sub-container3" id="div3">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam2.</p>
+      </div>
+    </div>
+    <div class="box">
+      <div class="button-container1">
+        <button class="button copy-button" data-target="div1">Add</button>
+        <button class="button" id="addButton1">Copy</button>
+      </div>
+      <div class="button-container2">
+        <button class="button copy-button" data-target="div2">Add</button>
+        <button class="button" id="addButton2">Copy</button>
+      </div>
+      <div class="button-container3">
+        <button class="button copy-button" data-target="div3">Add</button>
+        <button class="button" id="addButton3">Copy</button>
+      </div>
+    </div>
+    <div class="box1">
+      <div id="outputBox" class="output-container"></div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const table = document.getElementById("div1").querySelector("table > tbody");
+
+      fetch("country_data.json")
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((item) => {
+            const row = table.insertRow(-1);
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            cell1.textContent = item.country;
+            cell2.textContent = item.state;
+            cell3.textContent = item.city_count;
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching data: " + error);
+        });
+    });
+
+    const outputBox = document.getElementById('outputBox');
+
+    const copyButtons = document.querySelectorAll('.copy-button');
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        const divClone = targetElement.cloneNode(true);
+
+        outputBox.innerHTML = '';
+        outputBox.appendChild(divClone);
+      });
+    });
+
+    const clearButtons = document.querySelectorAll('.clear-button');
+    clearButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        outputBox.innerHTML = '';
+      });
+    });
+
+    document.getElementById('addButton1').addEventListener('click', function () {
+      const divClone = document.getElementById('div1').cloneNode(true);
+      outputBox.appendChild(divClone);
+    });
+
+    document.getElementById('addButton2').addEventListener('click', function () {
+      const subContainerClone = document.getElementById('div2').cloneNode(true);
+      outputBox.appendChild(subContainerClone);
+    });
+
+    document.getElementById('addButton3').addEventListener('click', function () {
+      const divClone = document.getElementById('div3').cloneNode(true);
+      outputBox.appendChild(divClone);
+    });
+  </script>
+
+</body>
+
+</html>

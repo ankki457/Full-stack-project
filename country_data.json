@@ -1,0 +1,17 @@
+[
+    {
+        "country": "India",
+        "state": "Maharashtra",
+        "city_count": 50
+    },
+    {
+        "country": "India",
+        "state": "Madhya Pradesh",
+        "city_count": 65
+    },
+    {
+        "country": "India",
+        "state": "Andhra Pradesh",
+        "city_count": 55
+    }
+]
